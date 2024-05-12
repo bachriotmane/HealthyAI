@@ -19,7 +19,7 @@ export const Analyse = () => {
     const [selectedAnalyse, setSelectedAnalyse] = useState(null);
     const afficheButton = (rowData) => {
         return (
-            <Button label="Show" icon="pi pi-external-link" onClick={() => {
+            <Button label="Afficher"  onClick={() => {
                 setSelectedAnalyse(rowData);
                 setVisibledd(true);
             }} />
@@ -47,24 +47,24 @@ export const Analyse = () => {
     const handleSubmit = async () => {
         try {
             const response = await axios.post(
-                'https://api-d7b62b.stack.tryrelevance.com/latest/studios/0e56f82a-8c9b-440b-b62a-d005761f11ad/trigger_limited',
+                'https://api-d7b62b.stack.tryrelevance.com/latest/studios/493b4561-bd09-4dbd-9454-fd991870dedb/trigger_limited',
                 {
                     params: {
                         file_url: lien,
                         options: langue
                     },
-                    project: "c68a5aa9d903-49f5-950d-d25829e4cf7b"
+                    project: "80ada329d649-43f7-b199-7ce65bb825a1"
                 },
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": "c68a5aa9d903-49f5-950d-d25829e4cf7b:sk-ZDY1OTI4ODgtMDRiYi00MGVkLWE3OGYtMjI3YmRhM2U2MzNm"
+                        "Authorization": "80ada329d649-43f7-b199-7ce65bb825a1:sk-YzY2OTZhN2MtYTQ3ZS00NTBkLTliYzctZjAwMzk2YjQ0NzRl"
                     }
                 }
             );
 
             const { data } = response;
-            
+            console.log("Données de sortie :", data.output.data);
             
             await axiosInstance.post(`http://localhost:8282/api/patient/analyse/${username}`, { 
                 name: nom,
@@ -74,7 +74,7 @@ export const Analyse = () => {
             setVisible(false);
             fetchAnalyses(); // Met à jour la liste des analyses après l'ajout
         } catch (error) {
-            console.log(error);
+            console.error('Erreur lors de la soumission de l\'analyse :', error);
         }
     };
 
@@ -162,7 +162,7 @@ export const Analyse = () => {
     <div>
         {selectedAnalyse && (
             <div>
-                <h3>Nom : {selectedAnalyse.text}</h3>
+                <h3>{selectedAnalyse.text}</h3>
             </div>
         )}
     </div>
